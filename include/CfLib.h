@@ -401,7 +401,7 @@ private:
 
 	//Set HeartBeatError Callback
 	std::map<UNS8, std::function<void()> > heartBeatErrorCb;
-	static void heartBeatErrorCbFwd(CO_Data* d, UNS8 heartbeatID);
+	static void heartBeatErrorCbFwd(CO_Data* d, UNS8 heartbeatID); 
 
 	//Set Initialisation Callback
 	static std::function<void()> initialisationCb;
