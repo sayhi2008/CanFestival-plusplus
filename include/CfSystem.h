@@ -20,10 +20,10 @@ namespace canopenlib
 class CfSystem
 {
 private:
-	CfLib &nh_;
+    CfLib &nh_;
 
 public:
-	CfSystem();
+    CfSystem();
     ~CfSystem();
     const CfResult* init(s_BOARD board, UNS8 id);
     const CfResult* cleanup();
