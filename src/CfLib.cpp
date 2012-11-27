@@ -19,12 +19,6 @@ using std::endl;
 namespace canopenlib
 {
 
-void nothing(const int id)
-{
-	printf("==== Slave %d boot up ====\n", id);
-}
-
-
 CfLib &CfLib::GetInstance()
 {
 	static CfLib instance;
@@ -80,6 +74,7 @@ UNS8 CfLib::getNodeId()
 {
 	return ::getNodeId(co_data_);
 }
+
 
 UNS8 CfLib::setState(e_nodeState newState)
 {
@@ -255,7 +250,6 @@ UNS32 CfLib::dataCallbackFwd(CO_Data* d, const indextable *index, UNS8 bSubindex
 void CfLib::setHeartBeatErrorCb(UNS8 heartbeatID, std::function<void()> func)
 {
 	CFLIB.heartBeatErrorCb.insert(std::make_pair(heartbeatID, func));
-//	heartBeatErrorCb = func;
 	CFLIB.co_data_->heartbeatError = heartBeatErrorCbFwd;
 }
 
@@ -266,20 +260,35 @@ void CfLib::delHeartBeatErrorCb(UNS8 heartbeatID)
 
 void CfLib::heartBeatErrorCbFwd(CO_Data* d, UNS8 heartbeatID)
 {
-//	printf("HeartbeatError!!!!! %d\n", heartbeatID);
-//	heartBeatErrorCb();
 	std::map<UNS8, std::function<void()> >::const_iterator iter = CFLIB.heartBeatErrorCb.find(heartbeatID);
 	if (iter == CFLIB.heartBeatErrorCb.end())
 	{
-//	    printf("Uninitialized Nodes Error:\n");
-//	    printf("	ID: %d\n", heartbeatID);
 	}
 	else
 		CFLIB.heartBeatErrorCb[heartbeatID]();
-//	CFLIB.initHeartbeat();
 }
 
-//std::function<void()> CfLib::heartBeatErrorCb;
+////
+void CfLib::setPostEmcyCb(UNS8 nodeID, std::function<void(UNS16 errCode, UNS8 errReg)> func)
+{
+	CFLIB.postEmcyCb.insert(std::make_pair(nodeID, func));
+	CFLIB.co_data_->post_emcy = postEmcyCbFwd;
+}
+
+void CfLib::delPostEmcyCb(UNS8 nodeID)
+{
+	CFLIB.postEmcyCb.erase(nodeID);
+}
+
+void CfLib::postEmcyCbFwd(CO_Data* d, UNS8 nodeID, UNS16 errCode, UNS8 errReg)
+{
+	std::map<UNS8, std::function<void(UNS16 errCode, UNS8 errReg)> >::const_iterator iter = CFLIB.postEmcyCb.find(nodeID);
+	if (iter == CFLIB.postEmcyCb.end())
+	{
+	}
+	else
+		CFLIB.postEmcyCb[nodeID](errCode, errReg);
+}
 
 ////
 void CfLib::setInitialisationCb(std::function<void()> func)
@@ -459,12 +468,10 @@ UNS8 CfLib::getSDO(
 	}
 	else
 		return res;
-
 	if(CFLIB.isSucessful())
 	{
 		if(size != CFLIB.getSize())
 			return res;
-
 		memcpy(data,CFLIB.getData(),size);
 		return 0;
 	}
@@ -602,6 +609,14 @@ void CfLib::notify()
 	m_cond_wait.notify_one();
 }
 
+void EnterMutex(void)
+{
+	::EnterMutex();
+}
 
+void LeaveMutex(void)
+{
+	::LeaveMutex();
+}
 
 }

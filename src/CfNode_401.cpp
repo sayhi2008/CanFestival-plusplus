@@ -81,9 +81,25 @@ const CfResult* CfNode_401::setAinPara(UNS8 ain_id, AinSettings &setting)
 	return e;
 }
 
+const CfResult* CfNode_401::getTimeStamp(UNS32* value)
+{
+	if(nh_.getSDO(node_id_, TimeStamp, 0, 0, value, 4, 0))
+		return &CfResult::CO_SDO_ERROR;
+	else
+		return &CfResult::CO_OK;
+}
+
+const CfResult* CfNode_401::setTimeStamp(UNS32 value)
+{
+	if(nh_.setSDO(node_id_, TimeStamp, 0, 0, &value, 4, 0))
+		return &CfResult::CO_SDO_ERROR;
+	else
+		return &CfResult::CO_OK;
+}
+
 const CfResult*  CfNode_401::getDin8Value(UNS8 id, UNS8* value)
 {
-	if(nh_.setSDO(node_id_, IOOBJID_DIN_8_VALUE, id + 1, 0, value, 1, 0))
+	if(nh_.getSDO(node_id_, IOOBJID_DIN_8_VALUE, id + 1, 0, value, 1, 0))
 		return &CfResult::CO_SDO_ERROR;
 	else
 		return &CfResult::CO_OK;

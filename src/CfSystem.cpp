@@ -28,8 +28,6 @@ CfSystem::~CfSystem()
 //}
 
 
-
-
 void CfSystem::setID(UNS8 id)
 {
 	nh_.setNodeId(id);
@@ -72,6 +70,78 @@ const CfResult* CfSystem::cleanup()
 	nh_.setState(Stopped);
 	nh_.canClose();
 	nh_.TimerCleanup();
+}
+
+const CfResult* CfSystem::goReset()
+{
+	UNS8 res;
+	res = nh_.setState(Initialisation);
+	if(res == 0xff)
+		return &CfResult::CO_NMT_ERROR;
+	else
+		return &CfResult::CO_OK;
+}
+
+const CfResult* CfSystem::goPreOperational()
+{
+	UNS8 res;
+	res = nh_.setState(Pre_operational);
+	if(res == 0xff)
+		return &CfResult::CO_NMT_ERROR;
+	else
+		return &CfResult::CO_OK;
+}
+
+const CfResult* CfSystem::goOperational()
+{
+	UNS8 res;
+	res = nh_.setState(Operational);
+	if(res == 0xff)
+		return &CfResult::CO_NMT_ERROR;
+	else
+		return &CfResult::CO_OK;
+}
+
+const CfResult* CfSystem::goStopped()
+{
+	UNS8 res;
+	res = nh_.setState(Stopped);
+	if(res == 0xff)
+		return &CfResult::CO_NMT_ERROR;
+	else
+		return &CfResult::CO_OK;
+}
+
+const CfResult* CfSystem::sysReset()
+{
+	if(nh_.masterSendNMTstateChange(0, NMT_Reset_Node))
+		return &CfResult::CO_NMT_ERROR;
+	else
+		return &CfResult::CO_OK;
+}
+
+const CfResult* CfSystem::sysPreOperational()
+{
+	if(nh_.masterSendNMTstateChange(0, NMT_Enter_PreOperational))
+		return &CfResult::CO_NMT_ERROR;
+	else
+		return &CfResult::CO_OK;
+}
+
+const CfResult* CfSystem::sysOperational()
+{
+	if(nh_.masterSendNMTstateChange(0, NMT_Start_Node))
+		return &CfResult::CO_NMT_ERROR;
+	else
+		return &CfResult::CO_OK;
+}
+
+const CfResult* CfSystem::sysStopped()
+{
+	if(nh_.masterSendNMTstateChange(0, NMT_Stop_Node))
+		return &CfResult::CO_NMT_ERROR;
+	else
+		return &CfResult::CO_OK;
 }
 
 }

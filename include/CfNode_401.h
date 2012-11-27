@@ -15,7 +15,6 @@
 #include <functional>
 #include "canfestival.h"
 #include "CfResult.h"
-#include "CfParameter.h"
 #include "CfNode.h"
 
 namespace canopenlib
@@ -23,64 +22,114 @@ namespace canopenlib
 
 enum IO_OBJID
 {
-	   IOOBJID_DIN_8_VALUE             = 0x6000,  ///<  8-bit digital input value
-	   IOOBJID_DIN_8_POL               = 0x6002,  ///<  8-bit digital input polarity
-	   IOOBJID_DIN_8_FILT              = 0x6003,  ///<  8-bit digital input filter constant
-	   IOOBJID_DIN_INTENA              = 0x6005,  ///< Digital input interrupt enable
-	   IOOBJID_DIN_8_MASK_ANY          = 0x6006,  ///<  8-bit digital input int mask, any change
-	   IOOBJID_DIN_8_MASK_L2H          = 0x6007,  ///<  8-bit digital input int mask, low to high
-	   IOOBJID_DIN_8_MASK_H2L          = 0x6008,  ///<  8-bit digital input int mask, high to low
-	   IOOBJID_DIN_1_VALUE             = 0x6020,  ///<  1-bit digital input value
-	   IOOBJID_DIN_1_POL               = 0x6030,  ///<  1-bit digital input polarity
-	   IOOBJID_DIN_1_FILT              = 0x6038,  ///<  1-bit digital input filter constant
-	   IOOBJID_DIN_1_MASK_ANY          = 0x6050,  ///<  1-bit digital input int mask, any change
-	   IOOBJID_DIN_1_MASK_L2H          = 0x6060,  ///<  1-bit digital input int mask, low to high
-	   IOOBJID_DIN_1_MASK_H2L          = 0x6070,  ///<  1-bit digital input int mask, high to low
-	   IOOBJID_DIN_16_VALUE            = 0x6100,  ///< 16-bit digital input value
-	   IOOBJID_DIN_16_POL              = 0x6102,  ///< 16-bit digital input polarity
-	   IOOBJID_DIN_16_FILT             = 0x6103,  ///< 16-bit digital input filter constant
-	   IOOBJID_DIN_16_MASK_ANY         = 0x6106,  ///< 16-bit digital input int mask, any change
-	   IOOBJID_DIN_16_MASK_L2H         = 0x6107,  ///< 16-bit digital input int mask, low to high
-	   IOOBJID_DIN_16_MASK_H2L         = 0x6108,  ///< 16-bit digital input int mask, high to low
-	   IOOBJID_DIN_32_VALUE            = 0x6120,  ///< 32-bit digital input value
-	   IOOBJID_DIN_32_POL              = 0x6122,  ///< 32-bit digital input polarity
-	   IOOBJID_DIN_32_FILT             = 0x6123,  ///< 32-bit digital input filter constant
-	   IOOBJID_DIN_32_MASK_ANY         = 0x6126,  ///< 32-bit digital input int mask, any change
-	   IOOBJID_DIN_32_MASK_L2H         = 0x6127,  ///< 32-bit digital input int mask, low to high
-	   IOOBJID_DIN_32_MASK_H2L         = 0x6128,  ///< 32-bit digital input int mask, high to low
+	   IOOBJID_DIN_8_VALUE			= 0x6000,  ///<  8-bit digital input value
+	   IOOBJID_DIN_8_POL           	= 0x6002,  ///<  8-bit digital input polarity
+	   IOOBJID_DIN_8_FILT           = 0x6003,  ///<  8-bit digital input filter constant
+	   IOOBJID_DIN_INTENA           = 0x6005,  ///< Digital input interrupt enable
+	   IOOBJID_DIN_8_MASK_ANY       = 0x6006,  ///<  8-bit digital input int mask, any change
+	   IOOBJID_DIN_8_MASK_L2H       = 0x6007,  ///<  8-bit digital input int mask, low to high
+	   IOOBJID_DIN_8_MASK_H2L       = 0x6008,  ///<  8-bit digital input int mask, high to low
+	   IOOBJID_DIN_1_VALUE          = 0x6020,  ///<  1-bit digital input value
+	   IOOBJID_DIN_1_POL            = 0x6030,  ///<  1-bit digital input polarity
+	   IOOBJID_DIN_1_FILT           = 0x6038,  ///<  1-bit digital input filter constant
+	   IOOBJID_DIN_1_MASK_ANY       = 0x6050,  ///<  1-bit digital input int mask, any change
+	   IOOBJID_DIN_1_MASK_L2H       = 0x6060,  ///<  1-bit digital input int mask, low to high
+	   IOOBJID_DIN_1_MASK_H2L       = 0x6070,  ///<  1-bit digital input int mask, high to low
+	   IOOBJID_DIN_16_VALUE         = 0x6100,  ///< 16-bit digital input value
+	   IOOBJID_DIN_16_POL           = 0x6102,  ///< 16-bit digital input polarity
+	   IOOBJID_DIN_16_FILT          = 0x6103,  ///< 16-bit digital input filter constant
+	   IOOBJID_DIN_16_MASK_ANY      = 0x6106,  ///< 16-bit digital input int mask, any change
+	   IOOBJID_DIN_16_MASK_L2H      = 0x6107,  ///< 16-bit digital input int mask, low to high
+	   IOOBJID_DIN_16_MASK_H2L      = 0x6108,  ///< 16-bit digital input int mask, high to low
+	   IOOBJID_DIN_32_VALUE         = 0x6120,  ///< 32-bit digital input value
+	   IOOBJID_DIN_32_POL           = 0x6122,  ///< 32-bit digital input polarity
+	   IOOBJID_DIN_32_FILT          = 0x6123,  ///< 32-bit digital input filter constant
+	   IOOBJID_DIN_32_MASK_ANY      = 0x6126,  ///< 32-bit digital input int mask, any change
+	   IOOBJID_DIN_32_MASK_L2H      = 0x6127,  ///< 32-bit digital input int mask, low to high
+	   IOOBJID_DIN_32_MASK_H2L      = 0x6128,  ///< 32-bit digital input int mask, high to low
 
-	   IOOBJID_DOUT_8_VALUE            = 0x6200,  ///<  8-bit digital output value
-	   IOOBJID_DOUT_8_POL              = 0x6202,  ///<  8-bit digital output polarity
-	   IOOBJID_DOUT_8_ERRMODE          = 0x6206,  ///<  8-bit digital output error mode
-	   IOOBJID_DOUT_8_ERRVAL           = 0x6207,  ///<  8-bit digital output error value
-	   IOOBJID_DOUT_8_FILT             = 0x6208,  ///<  8-bit digital output filter mask
-	   IOOBJID_DOUT_1_VALUE            = 0x6220,  ///<  1-bit digital output value
-	   IOOBJID_DOUT_1_POL              = 0x6240,  ///<  1-bit digital output polarity
-	   IOOBJID_DOUT_1_ERRMODE          = 0x6250,  ///<  1-bit digital output error mode
-	   IOOBJID_DOUT_1_ERRVAL           = 0x6260,  ///<  1-bit digital output error value
-	   IOOBJID_DOUT_1_FILT             = 0x6270,  ///<  1-bit digital output filter mask
-	   IOOBJID_DOUT_16_VALUE           = 0x6300,  ///< 16-bit digital output value
-	   IOOBJID_DOUT_16_POL             = 0x6302,  ///< 16-bit digital output polarity
-	   IOOBJID_DOUT_16_ERRMODE         = 0x6306,  ///< 16-bit digital output error mode
-	   IOOBJID_DOUT_16_ERRVAL          = 0x6307,  ///< 16-bit digital output error value
-	   IOOBJID_DOUT_16_FILT            = 0x6308,  ///< 16-bit digital output filter mask
-	   IOOBJID_DOUT_32_VALUE           = 0x6320,  ///< 32-bit digital output value
-	   IOOBJID_DOUT_32_POL             = 0x6322,  ///< 32-bit digital output polarity
-	   IOOBJID_DOUT_32_ERRMODE         = 0x6326,  ///< 32-bit digital output error mode
-	   IOOBJID_DOUT_32_ERRVAL          = 0x6327,  ///< 32-bit digital output error value
-	   IOOBJID_DOUT_32_FILT            = 0x6328,  ///< 32-bit digital output filter mask
+	   IOOBJID_DOUT_8_VALUE         = 0x6200,  ///<  8-bit digital output value
+	   IOOBJID_DOUT_8_POL           = 0x6202,  ///<  8-bit digital output polarity
+	   IOOBJID_DOUT_8_ERRMODE       = 0x6206,  ///<  8-bit digital output error mode
+	   IOOBJID_DOUT_8_ERRVAL        = 0x6207,  ///<  8-bit digital output error value
+	   IOOBJID_DOUT_8_FILT          = 0x6208,  ///<  8-bit digital output filter mask
+	   IOOBJID_DOUT_1_VALUE         = 0x6220,  ///<  1-bit digital output value
+	   IOOBJID_DOUT_1_POL           = 0x6240,  ///<  1-bit digital output polarity
+	   IOOBJID_DOUT_1_ERRMODE       = 0x6250,  ///<  1-bit digital output error mode
+	   IOOBJID_DOUT_1_ERRVAL        = 0x6260,  ///<  1-bit digital output error value
+	   IOOBJID_DOUT_1_FILT          = 0x6270,  ///<  1-bit digital output filter mask
+	   IOOBJID_DOUT_16_VALUE        = 0x6300,  ///< 16-bit digital output value
+	   IOOBJID_DOUT_16_POL          = 0x6302,  ///< 16-bit digital output polarity
+	   IOOBJID_DOUT_16_ERRMODE      = 0x6306,  ///< 16-bit digital output error mode
+	   IOOBJID_DOUT_16_ERRVAL       = 0x6307,  ///< 16-bit digital output error value
+	   IOOBJID_DOUT_16_FILT         = 0x6308,  ///< 16-bit digital output filter mask
+	   IOOBJID_DOUT_32_VALUE        = 0x6320,  ///< 32-bit digital output value
+	   IOOBJID_DOUT_32_POL          = 0x6322,  ///< 32-bit digital output polarity
+	   IOOBJID_DOUT_32_ERRMODE      = 0x6326,  ///< 32-bit digital output error mode
+	   IOOBJID_DOUT_32_ERRVAL       = 0x6327,  ///< 32-bit digital output error value
+	   IOOBJID_DOUT_32_FILT         = 0x6328,  ///< 32-bit digital output filter mask
 
-	   IOOBJID_AIN_16_VALUE            = 0x6401,  ///< 16-bit analog input value
-	   IOOBJID_AIN_INTENA              = 0x6423,  ///< Analog input interrupt enable
+	   IOOBJID_AIN_16_VALUE         = 0x6401,  ///< 16-bit analog input value
+	   IOOBJID_AIN_INTENA           = 0x6423,  ///< Analog input interrupt enable
 
-	   IOOBJID_AIN_32_UPLIM            = 0x6424,  ///< 32-bit analog input upper limit
-	   IOOBJID_AIN_32_LWLIM            = 0x6425,  ///< 32-bit analog input lower limit
-	   IOOBJID_AIN_32_UDELTA           = 0x6426,  ///< 32-bit analog input unsigned delta
+	   IOOBJID_AIN_32_UPLIM         = 0x6424,  ///< 32-bit analog input upper limit
+	   IOOBJID_AIN_32_LWLIM         = 0x6425,  ///< 32-bit analog input lower limit
+	   IOOBJID_AIN_32_UDELTA        = 0x6426,  ///< 32-bit analog input unsigned delta
 
-	   IOOBJID_AIN_32_OFFSET           = 0x6431,  ///< 32-bit analog input offset
-	   IOOBJID_AIN_32_SCALE            = 0x6432,  ///< 32-bit analog input scaling
+	   IOOBJID_AIN_32_OFFSET        = 0x6431,  ///< 32-bit analog input offset
+	   IOOBJID_AIN_32_SCALE       	= 0x6432,  ///< 32-bit analog input scaling
 
-	   NODE_ID             	= 0x21B0,  ///<  8-bit digital input value
+	   TimeStamp             		= 0x1013,
+	   NODE_ID             			= 0x21B0,
+};
+
+struct DinSettings
+{
+   UNS8 din8Pol;
+   UNS8 din8MaskAny;
+   UNS8 din8MaskL2H;
+   UNS8 din8MaskH2L;
+   DinSettings(void)
+   {
+	   din8Pol = 0;
+	   din8MaskAny = 0;
+	   din8MaskL2H = 0;
+	   din8MaskH2L = 0;
+
+   }
+};
+
+struct DoutSettings
+{
+	UNS8 dout8Pol;
+	UNS8 dout8ErrMode;
+	UNS8 dout8ErrVal;
+
+	DoutSettings(void)
+	{
+		dout8Pol = 0;
+		dout8ErrMode = 0;
+		dout8ErrVal = 0;
+	}
+};
+
+
+struct AinSettings
+{
+	UNS32 ain16UpLim;
+	UNS32 ain16LwLim;
+	UNS32 ain16UDelta;
+	INTEGER32 ainScale;
+	INTEGER32 ainOffset;
+
+	AinSettings(void)
+	{
+		ain16UpLim = 0;
+		ain16LwLim = 0;
+		ain16UDelta = 0;
+		ainScale = 0;
+		ainOffset = 0;
+	}
 };
 
 class CfNode_401: public CfNode
@@ -92,6 +141,9 @@ public:
     const CfResult* setDinPara(UNS8 din_id, DinSettings &setting);
     const CfResult* setDoutPara(UNS8 dout_id, DoutSettings &setting);
     const CfResult* setAinPara(UNS8 ain_id, AinSettings &setting);
+
+    const CfResult* getTimeStamp(UNS32* value);
+    const CfResult* setTimeStamp(UNS32 value);
 
     const CfResult* getDin8Value(UNS8 id, UNS8* value);
     const CfResult* setDin8Pol(UNS8 id, UNS8 value);

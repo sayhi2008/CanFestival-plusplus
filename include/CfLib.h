@@ -329,6 +329,12 @@ public:
 	static void
 	setPostSlaveBootupCb(std::function<void(const int id)> func);
 
+	static void
+	setPostEmcyCb(UNS8 nodeID, std::function<void(UNS16 errCode, UNS8 errReg)> func);
+
+	static void
+	delPostEmcyCb(UNS8 nodeID);
+
 	/**
 	 * @ingroup timers_driver
 	 * @brief Initialize Timer
@@ -388,20 +394,20 @@ private:
 	const CfLib &operator =(const CfLib &);
 
 	//Set OD Callback
-	static std::function<void(const indextable *index, UNS8 bSubindex)>
-	odCallback;
-	static UNS32
-	odCallbackFwd(CO_Data* d, const indextable *index, UNS8 bSubindex);
+	static std::function<void(const indextable *index, UNS8 bSubindex)> odCallback;
+	static UNS32 odCallbackFwd(CO_Data* d, const indextable *index, UNS8 bSubindex);
 
 	//Set Data Callback
-	std::map<UNS32, std::function<void(std::string)> >
-	dataCallback;
-	static UNS32
-	dataCallbackFwd(CO_Data* d, const indextable *index, UNS8 bSubindex);
+	std::map<UNS32, std::function<void(std::string)> > dataCallback;
+	static UNS32 dataCallbackFwd(CO_Data* d, const indextable *index, UNS8 bSubindex);
 
 	//Set HeartBeatError Callback
 	std::map<UNS8, std::function<void()> > heartBeatErrorCb;
-	static void heartBeatErrorCbFwd(CO_Data* d, UNS8 heartbeatID); 
+	static void heartBeatErrorCbFwd(CO_Data* d, UNS8 heartbeatID);
+
+	//Set PostEmcy Callback
+	std::map<UNS8, std::function<void(UNS16 errCode, UNS8 errReg)> > postEmcyCb;
+	static void postEmcyCbFwd(CO_Data* d, UNS8 nodeID, UNS16 errCode, UNS8 errReg);
 
 	//Set Initialisation Callback
 	static std::function<void()> initialisationCb;
@@ -453,6 +459,10 @@ private:
 	void notify();
 
 };
+
+void EnterMutex(void);
+
+void LeaveMutex(void);
 
 }
 

@@ -40,6 +40,7 @@ const CfResult* CfNode::init(UNS8 id)
 const CfResult* CfNode::cleanup()
 {
 	nh_.delHeartBeatErrorCb(node_id_);
+	nh_.delPostEmcyCb(node_id_);
 	const UNS8 offset = (node_id_-1)*4;
 	for(int i=0x2000+offset; i<0x2000+offset+4; i++)
 		for(int j=1; j<9; j++)
@@ -165,6 +166,9 @@ const CfResult* CfNode::getSyncWindow(UNS32* window)
 
 const CfResult* CfNode::setHbPeriod(UNS16 period)
 {
+	UNS32 consumer_period = node_id_*0x10000 + 5 + period;
+	UNS32 size = 4;
+	nh_.cfWriteLocalDict(0x1016, node_id_, &consumer_period, &size, RW);
 	if(nh_.setSDO(node_id_, 0x1017, 0, 0, &period, 2, 0))
 		return &CfResult::CO_SDO_ERROR;
 	else
@@ -187,12 +191,15 @@ const CfResult* CfNode::getHbPeriod(UNS16* period)
 
 
 
-const CfResult* CfNode::heartBeatErrorCb(std::function<void()> func)
+const CfResult* CfNode::setHeartBeatErrorCb(std::function<void()> func)
 {
 	nh_.setHeartBeatErrorCb(node_id_, func);
 }
 
-
+const CfResult* CfNode::setPostEmcyCb(std::function<void(UNS16 errCode, UNS8 errReg)> func)
+{
+	nh_.setPostEmcyCb(node_id_, func);
+}
 
 const CfResult* CfNode::setTPDOTransType(UNS8 TPDO_id, UNS8 value)
 {
@@ -262,7 +269,7 @@ const CfResult* CfNode::getTPDOEventTimer(UNS8 TPDO_id, UNS16* value)
 
 
 
-const CfResult* CfNode::setPDOMapping(UNS8 PDO_id, UNS8 sub_index,UNS32 value)
+const CfResult* CfNode::setTPDOMapping(UNS8 PDO_id, UNS8 sub_index,UNS32 value)
 {
 	if(nh_.setSDO(node_id_, TPDO_MAPPING + PDO_id - 1, sub_index, 0, &value, 4, 0))
 		return &CfResult::CO_SDO_ERROR;
@@ -273,7 +280,7 @@ const CfResult* CfNode::setPDOMapping(UNS8 PDO_id, UNS8 sub_index,UNS32 value)
 
 
 
-const CfResult* CfNode::getPDOMapping(UNS8 PDO_id, UNS8 sub_index, UNS32* value)
+const CfResult* CfNode::getTPDOMapping(UNS8 PDO_id, UNS8 sub_index, UNS32* value)
 {
 	if(nh_.getSDO(node_id_, TPDO_MAPPING + PDO_id - 1, sub_index, 0, value, 4, 0))
 		return &CfResult::CO_SDO_ERROR;

@@ -27,7 +27,6 @@ set(SRC_SRCS
 	${${PROJECT_NAME}_SOURCE_DIR}/src/CfNode_401.cpp
 	${${PROJECT_NAME}_SOURCE_DIR}/src/CfSystem.cpp
 	${${PROJECT_NAME}_SOURCE_DIR}/src/CfResult.cpp
-	${${PROJECT_NAME}_SOURCE_DIR}/src/CfParameter.cpp
 	${${PROJECT_NAME}_SOURCE_DIR}/src/HostNode.c
 )
 
@@ -36,7 +35,6 @@ set(LIBCF_INCS
 	${${PROJECT_NAME}_SOURCE_DIR}/include/CfLib.h
 	${${PROJECT_NAME}_SOURCE_DIR}/include/CfNode.h
 	${${PROJECT_NAME}_SOURCE_DIR}/include/CfNode_401.h
-	${${PROJECT_NAME}_SOURCE_DIR}/include/CfParameter.h
 	${${PROJECT_NAME}_SOURCE_DIR}/include/CfResult.h
 	${${PROJECT_NAME}_SOURCE_DIR}/include/CfSystem.h
 	${${PROJECT_NAME}_SOURCE_DIR}/include/HostNode.h
@@ -81,13 +79,10 @@ set(LIBCF_SRCS
 )
 
 set(SRC_LIBS
-	#canfestival
-	#canfestival_unix
 	pthread
 	rt
 	dl
 	canlib
-	#can_lib
 )
 
 ADD_LIBRARY(canfestival SHARED ${LIBCF_SRCS})

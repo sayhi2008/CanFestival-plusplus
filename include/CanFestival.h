@@ -41,4 +41,3 @@ void pause(void)
 #include "CfNode_401.h"
 #include "CfSystem.h"
 #include "CfResult.h"
-#include "CfParameter.h"

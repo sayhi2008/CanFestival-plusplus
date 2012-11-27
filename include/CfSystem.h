@@ -20,13 +20,23 @@ namespace canopenlib
 class CfSystem
 {
 private:
-    CfLib &nh_;
+	CfLib &nh_;
 
 public:
-    CfSystem();
+	CfSystem();
     ~CfSystem();
     const CfResult* init(s_BOARD board, UNS8 id);
     const CfResult* cleanup();
+
+    const CfResult* goReset();
+    const CfResult* goPreOperational();
+    const CfResult* goOperational();
+    const CfResult* goStopped();
+
+    const CfResult* sysReset();
+    const CfResult* sysPreOperational();
+    const CfResult* sysOperational();
+    const CfResult* sysStopped();
 
     void setID(UNS8 id);
     UNS8 getID();

@@ -15,7 +15,6 @@
 #include <functional>
 #include "canfestival.h"
 #include "CfResult.h"
-#include "CfParameter.h"
 #include "CfLib.h"
 
 namespace canopenlib
@@ -27,6 +26,20 @@ enum COMM_OBJID
 	   TPDO_MAPPING			= 0x1A00
 };
 
+struct CommSettings
+{
+   UNS32 synchPeriod;
+   UNS32 synchWindow;
+   bool synchProducer;
+   UNS16 heartbeatPeriod;
+   CommSettings(void)
+   {
+	   synchProducer    = false;
+	   synchPeriod      = 0x0007a120;
+	   synchWindow      = 0x0003d090;
+	   heartbeatPeriod  = 0x03E8;
+   }
+};
 
 class CfNode
 {
@@ -68,10 +81,11 @@ public:
     const CfResult* setTPDOEventTimer(UNS8 TPDO_id, UNS16 value);
     const CfResult* getTPDOEventTimer(UNS8 TPDO_id, UNS16* value);
 
+    const CfResult* setTPDOMapping(UNS8 PDO_id, UNS8 sub_index,UNS32 value);
+    const CfResult* getTPDOMapping(UNS8 PDO_id, UNS8 sub_index, UNS32 * value);
     const CfResult* subscribePDO(UNS8 PDO_id, std::function<void(std::string)> func);
-    const CfResult* setPDOMapping(UNS8 PDO_id, UNS8 sub_index,UNS32 value);
-    const CfResult* getPDOMapping(UNS8 PDO_id, UNS8 sub_index, UNS32 * value);
-    const CfResult* heartBeatErrorCb(std::function<void()> func);
+    const CfResult* setHeartBeatErrorCb(std::function<void()> func);
+    const CfResult* setPostEmcyCb(std::function<void(UNS16 errCode, UNS8 errReg)> func);
 
 };
 }
