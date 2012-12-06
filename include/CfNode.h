@@ -22,8 +22,9 @@ namespace canopenlib
 
 enum COMM_OBJID
 {
-	   TPDO_PARAMETER		= 0x1800,
-	   TPDO_MAPPING			= 0x1A00
+	TimeStamp 			= 0x1013,
+	TPDO_PARAMETER		= 0x1800,
+	TPDO_MAPPING		= 0x1A00
 };
 
 struct CommSettings
@@ -62,6 +63,7 @@ public:
 
     const CfResult* setCommPara(CommSettings &setting);
     const CfResult* saveCommPara(void);
+    const CfResult* loadCommPara(bool load);
 
     const CfResult* startSync(void);
     const CfResult* stopSync(void);
@@ -69,6 +71,8 @@ public:
     const CfResult* getSyncPeriod(UNS32* period);
     const CfResult* setSyncWindow(UNS32 window);
     const CfResult* getSyncWindow(UNS32* window);
+    const CfResult* getTimeStamp(UNS32* value);
+    const CfResult* setTimeStamp(UNS32 value);
     const CfResult* setHbPeriod(UNS16 period);
     const CfResult* getHbPeriod(UNS16* period);
 

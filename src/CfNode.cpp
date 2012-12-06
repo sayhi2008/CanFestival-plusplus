@@ -114,6 +114,17 @@ const CfResult* CfNode::saveCommPara(void)
 		return &CfResult::CO_OK;
 }
 
+const CfResult* CfNode::loadCommPara(bool load)
+{
+	UNS32 value = 0x64616f6c;
+	if(!load)
+		value = 0;
+	if(nh_.setSDO(node_id_, 0x1011, 2, 0, &value, 4, 0))
+		return &CfResult::CO_SDO_ERROR;
+	else
+		return &CfResult::CO_OK;
+}
+
 const CfResult* CfNode::startSync(void)
 {
 	UNS32 value = 0x40000080;
@@ -159,6 +170,22 @@ const CfResult* CfNode::setSyncWindow(UNS32 window)
 const CfResult* CfNode::getSyncWindow(UNS32* window)
 {
 	if(nh_.getSDO(node_id_, 0x1007, 0, 0, window, 4, 0))
+		return &CfResult::CO_SDO_ERROR;
+	else
+		return &CfResult::CO_OK;
+}
+
+const CfResult* CfNode::getTimeStamp(UNS32* value)
+{
+	if(nh_.getSDO(node_id_, TimeStamp, 0, 0, value, 4, 0))
+		return &CfResult::CO_SDO_ERROR;
+	else
+		return &CfResult::CO_OK;
+}
+
+const CfResult* CfNode::setTimeStamp(UNS32 value)
+{
+	if(nh_.setSDO(node_id_, TimeStamp, 0, 0, &value, 4, 0))
 		return &CfResult::CO_SDO_ERROR;
 	else
 		return &CfResult::CO_OK;

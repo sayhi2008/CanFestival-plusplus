@@ -81,17 +81,21 @@ const CfResult* CfNode_401::setAinPara(UNS8 ain_id, AinSettings &setting)
 	return e;
 }
 
-const CfResult* CfNode_401::getTimeStamp(UNS32* value)
+const CfResult* CfNode_401::saveManuPara(void)
 {
-	if(nh_.getSDO(node_id_, TimeStamp, 0, 0, value, 4, 0))
+	UNS32 value = 0x65766173;
+	if(nh_.setSDO(node_id_, 0x1010, 4, 0, &value, 4, 0))
 		return &CfResult::CO_SDO_ERROR;
 	else
 		return &CfResult::CO_OK;
 }
 
-const CfResult* CfNode_401::setTimeStamp(UNS32 value)
+const CfResult* CfNode_401::loadManuPara(bool load)
 {
-	if(nh_.setSDO(node_id_, TimeStamp, 0, 0, &value, 4, 0))
+	UNS32 value = 0x64616f6c;
+	if(!load)
+		value = 0;
+	if(nh_.setSDO(node_id_, 0x1011, 4, 0, &value, 4, 0))
 		return &CfResult::CO_SDO_ERROR;
 	else
 		return &CfResult::CO_OK;

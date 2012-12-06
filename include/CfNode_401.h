@@ -79,7 +79,6 @@ enum IO_OBJID
 	   IOOBJID_AIN_32_OFFSET        = 0x6431,  ///< 32-bit analog input offset
 	   IOOBJID_AIN_32_SCALE       	= 0x6432,  ///< 32-bit analog input scaling
 
-	   TimeStamp             		= 0x1013,
 	   NODE_ID             			= 0x21B0,
 };
 
@@ -141,9 +140,8 @@ public:
     const CfResult* setDinPara(UNS8 din_id, DinSettings &setting);
     const CfResult* setDoutPara(UNS8 dout_id, DoutSettings &setting);
     const CfResult* setAinPara(UNS8 ain_id, AinSettings &setting);
-
-    const CfResult* getTimeStamp(UNS32* value);
-    const CfResult* setTimeStamp(UNS32 value);
+    const CfResult* saveManuPara(void);
+    const CfResult* loadManuPara(bool load);
 
     const CfResult* getDin8Value(UNS8 id, UNS8* value);
     const CfResult* setDin8Pol(UNS8 id, UNS8 value);
