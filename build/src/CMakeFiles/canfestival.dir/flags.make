@@ -3,11 +3,11 @@
 
 # compile C with /usr/bin/gcc
 # compile CXX with /usr/bin/c++
-C_FLAGS = -fPIC -I/home/cnhzcy14/CanFestival-3-71623bbf8093/include -I/home/cnhzcy14/CanFestival-3-71623bbf8093/include/unix -I/home/cnhzcy14/CanFestival-3-71623bbf8093/include/timers_unix    -std=c++0x
+C_FLAGS = -fPIC -I/home/cnhzcy14/CanFestival-plusplus/include -I/home/cnhzcy14/CanFestival-plusplus/include/unix -I/home/cnhzcy14/CanFestival-plusplus/include/timers_unix    -std=c++0x
 
 C_DEFINES = -Dcanfestival_EXPORTS -DNOT_USE_DYNAMIC_LOADING
 
-CXX_FLAGS = -fPIC -I/home/cnhzcy14/CanFestival-3-71623bbf8093/include -I/home/cnhzcy14/CanFestival-3-71623bbf8093/include/unix -I/home/cnhzcy14/CanFestival-3-71623bbf8093/include/timers_unix    -std=c++0x
+CXX_FLAGS = -fPIC -I/home/cnhzcy14/CanFestival-plusplus/include -I/home/cnhzcy14/CanFestival-plusplus/include/unix -I/home/cnhzcy14/CanFestival-plusplus/include/timers_unix    -std=c++0x
 
 CXX_DEFINES = -Dcanfestival_EXPORTS -DNOT_USE_DYNAMIC_LOADING
 
