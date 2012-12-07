@@ -35,7 +35,7 @@
 namespace canopenlib
 {
 ///
-/// A simple C++ singleton wrapper of some useful CanFestival functions.
+/// This class is a simple C++ singleton wrapper of some useful CanFestival functions.
 ///
 class CfLib
 {
@@ -288,13 +288,43 @@ public:
 	void
 	heartbeatInit();
 
-	// sdo.h
+	/**
+	 * @ingroup sdo
+	 * @brief Used to send a SDO request frame to write in a distant node dictionnary.
+	 * @param nodeId Node Id of the slave
+	 * @param index At index indicated
+	 * @param subIndex At subIndex indicated
+	 * @param dataType (defined in objdictdef.h) : put "visible_string" for strings, 0 for integers or reals or other value.
+	 * @param *data Pointer to data
+	 * @param count number of bytes to write in the dictionnary.
+	 * @param useBlockMode
+	 * @return
+	 * - 0 is returned upon success.
+	 * - 0xFE is returned when no sdo client to communicate with node.
+	 * - 0xFF is returned when error occurs.
+	 */
 	UNS8
 	setSDO(UNS8 nodeId, UNS16 index,
 			UNS8 subIndex, UNS8 dataType,
 			void* data, UNS32 count,
 			UNS8 useBlockMode);
 
+	/**
+	 * @ingroup sdo
+	 * @brief Used to send a SDO request frame to read in a distant node dictionnary.
+	 * @param nodeId Node Id of the slave
+	 * @param index At index indicated
+	 * @param subIndex At subIndex indicated
+	 * @param dataType (defined in objdictdef.h) : put "visible_string" for strings, 0 for integers or reals or other value.
+	 * @param *data Pointer to data
+	 * @param size number of bytes to write in the dictionnary.
+	 * @param Callback Callback function
+	 * @param useBlockMode
+	 * @return
+	 * - 0 is returned upon success.
+	 * - 0xFE is returned when no sdo client to communicate with node.
+	 * - 0xFF is returned when error occurs.
+	 */
 	UNS8
 	getSDO(UNS8 nodeId, UNS16 index,
 			UNS8 subIndex, UNS8 dataType,

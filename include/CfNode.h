@@ -1,3 +1,8 @@
+/**
+ * @file   CfNode.h
+ * @author Simon CHENG ye
+ * @brief  CanOpen device node functions.
+ */
 #ifndef __CFNODE_H__
 #define __CFNODE_H__
 
@@ -42,6 +47,9 @@ struct CommSettings
    }
 };
 
+///
+/// This class is a CanOpen device node.
+///
 class CfNode
 {
 
@@ -53,30 +61,217 @@ public:
     CfNode();
     ~CfNode();
 
-    const CfResult* init(UNS8 id);
-    const CfResult* cleanup();
+	/**
+	 * @ingroup CfNode
+	 * @brief Initiate the device node
+	 * @param id Device node ID
+	 */
+    const CfResult*
+    init(UNS8 id);
 
-    const CfResult* goReset();
-    const CfResult* goPreOperational();
-    const CfResult* goOperational();
-    const CfResult* goStopped();
+	/**
+	 * @ingroup CfNode
+	 * @brief Cleanup the device node.
+	 * @return
+	 */
+    const CfResult*
+    cleanup();
 
-    const CfResult* setCommPara(CommSettings &setting);
-    const CfResult* saveCommPara(void);
-    const CfResult* loadCommPara(bool load);
+	/**
+	 * @ingroup CfNode
+	 * @brief Make device node go into Initialisation state.
+	 * @return
+	 *       - CO_OK if operation is successful.
+	 *       - CO_NMT_ERROR if operation is unsuccessful.
+	 */
+    const CfResult*
+    goReset();
 
-    const CfResult* startSync(void);
-    const CfResult* stopSync(void);
-    const CfResult* setSyncPeriod(UNS32 period);
-    const CfResult* getSyncPeriod(UNS32* period);
-    const CfResult* setSyncWindow(UNS32 window);
-    const CfResult* getSyncWindow(UNS32* window);
-    const CfResult* getTimeStamp(UNS32* value);
-    const CfResult* setTimeStamp(UNS32 value);
-    const CfResult* setHbPeriod(UNS16 period);
-    const CfResult* getHbPeriod(UNS16* period);
+	/**
+	 * @ingroup CfNode
+	 * @brief Make device node go into PreOperational state.
+	 * @return
+	 *       - CO_OK if operation is successful.
+	 *       - CO_NMT_ERROR if operation is unsuccessful.
+	 */
+    const CfResult*
+    goPreOperational();
 
-    const CfResult* setTPDOTransType(UNS8 TPDO_id, UNS8 value);
+	/**
+	 * @ingroup CfNode
+	 * @brief Make device node go into Operational state.
+	 * @return
+	 *       - CO_OK if operation is successful.
+	 *       - CO_NMT_ERROR if operation is unsuccessful.
+	 */
+    const CfResult*
+    goOperational();
+
+	/**
+	 * @ingroup CfNode
+	 * @brief Make device node go into Stopped state.
+	 * @return
+	 *       - CO_OK if operation is successful.
+	 *       - CO_NMT_ERROR if operation is unsuccessful.
+	 */
+    const CfResult*
+    goStopped();
+
+	/**
+	 * @ingroup CfNode
+	 * @brief Setup the communication parameters of device node.
+	 * @param &setting The struct address of communication parameters.
+	 * @return
+	 *       - CO_OK if operation is successful.
+	 *       - CO_SDO_ERROR if operation is unsuccessful.
+	 */
+    const CfResult*
+    setCommPara(CommSettings &setting);
+
+	/**
+	 * @ingroup CfNode
+	 * @brief Save the communication parameters of device node to flash.
+	 * @return
+	 *       - CO_OK if operation is successful.
+	 *       - CO_SDO_ERROR if operation is unsuccessful.
+	 */
+    const CfResult*
+    saveCommPara(void);
+
+	/**
+	 * @ingroup CfNode
+	 * @brief Load the communication parameters of device node from flash when device boot up.
+	 * @param load
+	 * 		- True if you want to load the communication parameters of device node from flash when device boot up.
+	 * 		- False if you want to load the default communication parameters of device node.
+	 * @return
+	 *       - CO_OK if operation is successful.
+	 *       - CO_SDO_ERROR if operation is unsuccessful.
+	 */
+    const CfResult*
+    loadCommPara(bool load);
+
+	/**
+	 * @ingroup CfNode
+	 * @brief Turn this device to be a sync signal producer.
+	 * @return
+	 *       - CO_OK if operation is successful.
+	 *       - CO_SDO_ERROR if operation is unsuccessful.
+	 */
+    const CfResult*
+    startSync(void);
+
+	/**
+	 * @ingroup CfNode
+	 * @brief Turn this device NOT to be a sync signal producer.
+	 * @return
+	 *       - CO_OK if operation is successful.
+	 *       - CO_SDO_ERROR if operation is unsuccessful.
+	 */
+    const CfResult*
+    stopSync(void);
+
+	/**
+	 * @ingroup CfNode
+	 * @brief Set the sync period of device node.
+	 * @param period The period of sync signal (us)
+	 * @return
+	 *       - CO_OK if operation is successful.
+	 *       - CO_SDO_ERROR if operation is unsuccessful.
+	 */
+    const CfResult*
+    setSyncPeriod(UNS32 period);
+
+	/**
+	 * @ingroup CfNode
+	 * @brief Get the sync period of device node.
+	 * @param period The variable stores the return value (us)
+	 * @return
+	 *       - CO_OK if operation is successful.
+	 *       - CO_SDO_ERROR if operation is unsuccessful.
+	 */
+    const CfResult*
+    getSyncPeriod(UNS32* period);
+
+	/**
+	 * @ingroup CfNode
+	 * @brief Set the sync window of device node.
+	 * @param window The period of sync signal (us)
+	 * @return
+	 *       - CO_OK if operation is successful.
+	 *       - CO_SDO_ERROR if operation is unsuccessful.
+	 */
+    const CfResult*
+    setSyncWindow(UNS32 window);
+
+	/**
+	 * @ingroup CfNode
+	 * @brief Get the sync window of device node.
+	 * @param window The variable stores the return value (us)
+	 * @return
+	 *       - CO_OK if operation is successful.
+	 *       - CO_SDO_ERROR if operation is unsuccessful.
+	 */
+    const CfResult*
+    getSyncWindow(UNS32* window);
+
+	/**
+	 * @ingroup CfNode
+	 * @brief Adjust the timer of device node.
+	 * @param window The period of sync signal (us)
+	 * @return
+	 *       - CO_OK if operation is successful.
+	 *       - CO_SDO_ERROR if operation is unsuccessful.
+	 */
+    const CfResult*
+    setTimeStamp(UNS32 time);
+
+	/**
+	 * @ingroup CfNode
+	 * @brief Get current time of device node.
+	 * @param time The variable stores the return value (us)
+	 * @return
+	 *       - CO_OK if operation is successful.
+	 *       - CO_SDO_ERROR if operation is unsuccessful.
+	 */
+    const CfResult*
+    getTimeStamp(UNS32* time);
+
+	/**
+	 * @ingroup CfNode
+	 * @brief Set the heart beat period of device node.
+	 * @param period The period of sync signal (ms)
+	 * @return
+	 *       - CO_OK if operation is successful.
+	 *       - CO_SDO_ERROR if operation is unsuccessful.
+	 */
+    const CfResult*
+    setHbPeriod(UNS16 period);
+
+	/**
+	 * @ingroup CfNode
+	 * @brief Get the heart beat period of device node.
+	 * @param period The variable stores the return value (us)
+	 * @return
+	 *       - CO_OK if operation is successful.
+	 *       - CO_SDO_ERROR if operation is unsuccessful.
+	 */
+    const CfResult*
+    getHbPeriod(UNS16* period);
+
+	/**
+	 * @ingroup CfNode
+	 * @brief Set a TPDO transmit type of device node.
+	 * @param TPDO_id TPDO ID
+	 * @param value transmit type
+	 * @return
+	 *       - CO_OK if operation is successful.
+	 *       - CO_SDO_ERROR if operation is unsuccessful.
+	 */
+    const CfResult*
+    setTPDOTransType(UNS8 TPDO_id, UNS8 value);
+
+
     const CfResult* getTPDOTransType(UNS8 TPDO_id, UNS8* value);
     const CfResult* setTPDOInhibitTime(UNS8 TPDO_id, UNS16 value);
     const CfResult* getTPDOInhibitTime(UNS8 TPDO_id, UNS16* value);

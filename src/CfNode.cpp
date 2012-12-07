@@ -175,17 +175,17 @@ const CfResult* CfNode::getSyncWindow(UNS32* window)
 		return &CfResult::CO_OK;
 }
 
-const CfResult* CfNode::getTimeStamp(UNS32* value)
+const CfResult* CfNode::getTimeStamp(UNS32* time)
 {
-	if(nh_.getSDO(node_id_, TimeStamp, 0, 0, value, 4, 0))
+	if(nh_.getSDO(node_id_, TimeStamp, 0, 0, time, 4, 0))
 		return &CfResult::CO_SDO_ERROR;
 	else
 		return &CfResult::CO_OK;
 }
 
-const CfResult* CfNode::setTimeStamp(UNS32 value)
+const CfResult* CfNode::setTimeStamp(UNS32 time)
 {
-	if(nh_.setSDO(node_id_, TimeStamp, 0, 0, &value, 4, 0))
+	if(nh_.setSDO(node_id_, TimeStamp, 0, 0, &time, 4, 0))
 		return &CfResult::CO_SDO_ERROR;
 	else
 		return &CfResult::CO_OK;

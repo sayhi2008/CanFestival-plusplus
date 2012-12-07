@@ -547,9 +547,9 @@ WARN_LOGFILE           =
 INPUT                  = \
 ../include/CfLib.h \
 ../include/CfSystem.h \
-../include/CfNode.h \
-../include/CfNode_401.h \
+#../include/CfNode.h \
 #../include/CfResult.h \
+#../include/CfParameter.h \
 #../include/ \
 
 #../../src/ \
